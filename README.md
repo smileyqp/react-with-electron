@@ -97,7 +97,7 @@ cnpm install cross-dev
     "dev": "concurrently \"wait-on http://localhost:3000 && electron .\" \"cross-env BROWSER=none npm start\""
 ```
 
-> 注意：之后值开启electron程序，并不会开启localhost:3000
+> 注意：之后只开启electron程序，并不会开启localhost:3000
 
 # 2、配置打包
 
