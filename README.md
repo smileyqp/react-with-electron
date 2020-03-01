@@ -222,3 +222,6 @@ module.exports = {
 
 ```
 
+> 打包：打包命令`sudo npm run dist`打包成可执行文件（mac的可执行文件在dist/mac下面）；`sudo npm run pack`打包成安装后的文件夹；
+
+> 注意：打包配置过程中可能会出现一系列问题；配置过程中需要注意相关版本，会导致错误；以及build里面的icon路径文件不存在也会导致打包出错。
