@@ -1,5 +1,6 @@
 const {app,BrowserWindow} = require('electron')
 const isDev = require('electron-is-dev')
+const path = require('path')
 
 let mainWindow;
 
@@ -9,10 +10,8 @@ app.on('ready',()=>{
     var electronScreen = electron.screen;
     var size = electronScreen.getPrimaryDisplay().workAreaSize;
     mainWindow = new BrowserWindow({
-        // width: size.width,
-        // height: size.height,
-        width:1024,
-        height:768,
+        width: size.width,
+        height: size.height,
         // frame:false,
         webPreferences:{
             nodeIntegration:true            //是指在render process中可以使用node
@@ -20,6 +19,9 @@ app.on('ready',()=>{
     })
 
 
-    const urlLocation = isDev ? 'http://localhost:3000':'null';
+    const urlLocation = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, './index.html')}`
     mainWindow.loadURL(urlLocation); 
+    mainWindow.on('close',()=>{
+        mainWindow = null;
+    })
 })

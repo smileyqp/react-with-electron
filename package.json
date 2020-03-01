@@ -1,24 +1,89 @@
 {
-  "name": "udi_gui",
-  "version": "0.1.0",
+  "name": "unity-drive",
+  "version": "1.0.0",
   "main": "main.js",
+  "description": "unity-drive",
+  "author": {
+    "name": "unity-drive",
+    "email": "udi@unity-drive.com"
+  },
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "electron-is-dev": "^1.1.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "bootstrap": "^4.3.1",
+    "electron-store": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "ele": "electron .",
-    "dev": "concurrently \"wait-on http://localhost:3000 && electron .\" \"cross-env BROWSER=none npm start\""
+    "buildMain": "webpack",
+    "onlyEle": "nodemon --watch main.js --watch src/menuTemplate.js --exec \"electron .\"",
+    "dev": "concurrently \"wait-on http://localhost:3000 && electron .\" \"cross-env BROWSER=none npm start\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "release": "cross-env GH_TOKEN=227a0117bc070274526dfe67a9f8a003b145874f electron-builder",
+    "prerelease": "npm run build && npm run buildMain",
+    "prepack": "npm run build && npm run buildMain",
+    "predist": "npm run build && npm run buildMain"
+  },
+  "homepage": "./",
+  "build": {
+    "appId": "unity-drive",
+    "productName": "unity-drive",
+    "copyright": "Copyright © 2019 ${author}",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extraMetadata": {
+      "main": "./build/main.js"
+    },
+    "extends": null,
+    "mac": {
+      "category": "public.app-category.productivity",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "background": "assets/smileyqp.jpg",
+      "icon": "assets/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 380,
+          "y": 280,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 280,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 500,
+        "height": 500
+      }
+    },
+    "win": {
+      "target": [
+        "msi",
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-Web-Setup-${version}.${ext}",
+      "publisherName": "unity-drive"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": false
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,9 +101,25 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^5.0.2",
-    "cross-env": "^6.0.3",
-    "electron": "^7.1.8",
-    "wait-on": "^3.3.0"
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-brands-svg-icons": "^5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "axios": "^0.19.0",
+    "classnames": "^2.2.6",
+    "concurrently": "^4.1.1",
+    "cross-env": "^5.2.0",
+    "electron": "^5.0.6",
+    "electron-builder": "^21.2.0",
+    "electron-is-dev": "^1.1.0",
+    "electron-store": "^4.0.0",
+    "electron-updater": "^4.1.2",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1",
+    "uuid": "^3.3.2",
+    "wait-on": "^3.3.0",
+    "webpack-cli": "^3.3.9"
   }
 }
