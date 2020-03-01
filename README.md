@@ -101,7 +101,7 @@ cnpm install cross-dev
 
 # 2、配置打包
 
-#####electron-builder打包
+##### electron-builder打包
 
 ```shell
 //安装electron-builder
@@ -190,7 +190,25 @@ cnpm install webpack-cli --save-dev
 ```
 
 ```shell
+/** webpack配置
+**	1、项目根目录文件下touch一个webpack.config.js配置文件
+**	2、写相关配置并
+**  3、package.json中添加webpack打包命令"buildMain": "webpack",
+/**
 
+const path = require('path')
+
+module.exports = {
+  target: 'electron-main',
+  entry: './main.js',
+  output: {
+    path: path.resolve(__dirname, './build'),
+    filename: 'main.js'
+  },
+  node: {
+    __dirname: false
+  }
+}
 ```
 
 ```shell
