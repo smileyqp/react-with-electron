@@ -18,11 +18,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "buildMain": "webpack",
-    "onlyEle": "nodemon --watch main.js --watch src/menuTemplate.js --exec \"electron .\"",
     "dev": "concurrently \"wait-on http://localhost:3000 && electron .\" \"cross-env BROWSER=none npm start\"",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "release": "cross-env GH_TOKEN=227a0117bc070274526dfe67a9f8a003b145874f electron-builder",
     "prerelease": "npm run build && npm run buildMain",
     "prepack": "npm run build && npm run buildMain",
     "predist": "npm run build && npm run buildMain"

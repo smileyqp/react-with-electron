@@ -99,3 +99,108 @@ cnpm install cross-dev
 
 > 注意：之后值开启electron程序，并不会开启localhost:3000
 
+# 2、配置打包
+
+#####electron-builder打包
+
+```shell
+//安装electron-builder
+cnpm install electron-builder --save-dev
+
+//安装webpack-cli
+cnpm install webpack-cli --save-dev
+```
+
+```shell
+//package.json中添加相关build配置
+"build": {
+    "appId": "smileyqp",
+    "productName": "smileyqp",
+    "copyright": "Copyright © 2019 ${author}",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extraMetadata": {
+      "main": "./build/main.js"
+    },
+    "extends": null,
+    "mac": {
+      "category": "public.app-category.productivity",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "background": "assets/smileyqp.jpg",
+      "icon": "assets/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 380,
+          "y": 280,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 280,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 500,
+        "height": 500
+      }
+    },
+    "win": {
+      "target": [
+        "msi",
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-Web-Setup-${version}.${ext}",
+      "publisherName": "unity-drive"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": false
+    }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  
+  
+```
+
+```shell
+
+```
+
+```shell
+//package.json中添加相关打包命令
+		"buildMain": "webpack",
+ 		"pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "prerelease": "npm run build && npm run buildMain",
+    "prepack": "npm run build && npm run buildMain",
+    "predist": "npm run build && npm run buildMain"
+
+```
+
