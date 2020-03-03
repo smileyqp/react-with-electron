@@ -24,13 +24,6 @@
     background-image: url('../images/circle_1.png'),url('../images/circle_2.png'),url('../images/circle_3.png'),url('../images/circle_4.png'),url('../images/circle_5.png'),url('../images/circle_6.png');
     animation: Begin-btn-spin infinite 20s linear;
 }
-.begin-btn:hover{
-    opacity: 0.8;
-}
-.begin-btn:active{
-    opacity: 0.5;
-}
-
 
 
 
@@ -86,13 +79,104 @@
     color:rgba(255,255,255,1);
     line-height: 50px;
 }
-.carlist-bottom-btn:hover{
+
+
+
+.immediate-container{
+    width: 250px;
+    height:370px;
+    position: absolute;
+    bottom: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.immediate-time{
+    width: 250px;
+    height: 250px;
+    background-image: url('../images/immediate-time.png'),url('../images/immediate-time_1.png');
+    background-size: 250px 250px;
+    font-size:60px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(36,255,255,1);
+    line-height: 250px;
+    text-align: center;
+}
+.immediate-btn{
+    width: 200px;
+    height: 80px;
+    background-image: url('../images/immediate-btn.png');
+    background-size: 200px 80px;
+    font-size:30px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    text-align: center;
+    line-height: 80px;
+}
+.immediate-btn:hover{
     opacity: 0.7;
 }
-.carlist-bottom-btn:active{
+.immediate-btn:active{
     opacity: 0.3;
 }
+.immediate-warn{
+    width: 250px;
+    height: 40px;
+    background-image: url('../images/immediate-warn.png');
+    background-size: 250px 40px;
+    font-size:12px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(36,255,255,1);
+    line-height: 40px;
+    text-align: center;
+}
 
+
+.shutdown-container{
+    width:403px;
+    height: 246.5px;
+    background-image: url('../images/shutdown_con.png');
+    display: flex;
+    flex-direction: column;
+}
+.shutdown-warn{
+    height: 120px;
+    font-size:24px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(36,255,255,1);
+    line-height: 150px;
+}
+.shutdown-btn-con{
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.shutdown-btn{
+    width: 140px;
+    height: 50px;
+    background-image: url('../images/shutdown_btn.png');
+    background-size: 140px 50px;
+    line-height: 50px;
+    font-size:18px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+}
+
+.btn:hover{
+    opacity: 0.7;
+}
+.btn:active{
+    opacity: 0.3;
+}
 
 @keyframes Begin-btn-spin {
     from {

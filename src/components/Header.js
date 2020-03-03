@@ -8,7 +8,7 @@ export default class Header extends Component{
       }
 
     render(){
-        const {shutdown} = this.props;
+        const {shutdown,shutdownBtn} = this.props;
         return(
             <div className="header">
                 <div className="header-left">
@@ -17,7 +17,7 @@ export default class Header extends Component{
                 </div>
                 <div className="header-right">
                     <div className='header-battery'>电量：100%</div>
-                    <img src={shutdown} className="shutdown"/>
+                    <img src={shutdown} onClick={shutdownBtn} className="shutdown btn"/>
                 </div>
             </div>
         )

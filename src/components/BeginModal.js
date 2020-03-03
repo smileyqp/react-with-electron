@@ -11,7 +11,7 @@ export default class BeginModal extends Component{
         return(
             beginVisible?
             <div className='modal-container'>
-                <div className='begin-btn' onClick={beginClick}>
+                <div className='begin-btn btn' onClick={beginClick}>
 
                 </div>
             </div>

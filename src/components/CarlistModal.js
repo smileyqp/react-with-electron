@@ -37,8 +37,8 @@ export default class CarlistModal extends Component{
                         <CarlistItem carname='111' type='choosed'/>
                     </div>
                     <div className='carlist-panel-bottom'>
-                        <div className='carlist-bottom-btn' onClick={carlistCancel}>取消</div>
-                        <div className='carlist-bottom-btn' onClick={carlistConfirm}>确认</div>
+                        <div className='carlist-bottom-btn btn' onClick={carlistCancel}>取消</div>
+                        <div className='carlist-bottom-btn btn' onClick={carlistConfirm}>确认</div>
                     </div>
                 </div>
             </div>

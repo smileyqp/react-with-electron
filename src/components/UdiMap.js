@@ -14,8 +14,8 @@ export default class UdiMap extends Component{
 
         return(
             <div className='map'>
-            <div className='map-stopbtn' onClick={stoptask}>
-              <div className='map-stopbtn-font'>终止行程</div>
+            <div className='map-stopbtn btn' onClick={stoptask}>
+              <div className='map-stopbtn-font btn'>终止行程</div>
             </div>
             <div className='map-container'>
             <Map mapStyle={config.map.mapStyle} amapkey={config.map.amapkey} zoom='17' ></Map>
