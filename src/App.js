@@ -7,6 +7,10 @@ import subscribMsg from './utils/SubscribeMsg'
 import login from './utils/action'
 import BeginModal from './components/BeginModal.js';
 import CarlistModal from './components/CarlistModal.js';
+import Header from './components/Header.js'
+import UdiMap from './components/UdiMap'
+
+
 require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
@@ -69,6 +73,9 @@ class App extends React.Component{
   carlistConfirm=()=>{
     this.setState({carlistVisile:false})
   }
+  stoptask = () => {
+    this.setState({beginVisible:true})
+  }
   render(){
     console.log(this.state&&this.state.msg)
     const beginMdal = (
@@ -90,29 +97,39 @@ class App extends React.Component{
           {beginMdal}
           {carlistModal}
         <div className="app-container" style={{backgroundImage:`url(${bg_pic})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}>
-          
-          
-          <div className="header">
-            <div className="header-left">
-              <div className='header-speed'>速度：10km/h</div>
-              <div className='header-mile'>里程：10km</div>
-            </div>
-            <div className="header-right">
-              <div className='header-battery'>电量：100%</div>
-              <img src={shutdown} className="shutdown"/>
-            </div>
+          <Header
+            shutdown={shutdown}
+            speed={this.state.speed}
+            mile={this.state.mile}
+            battery={this.state.battery}
+          />
+          <div className='station'>
+            <div className='station-sm-circle'></div>
+            <div className='station-pg'></div>
+            <div className='station-sm-circle'></div>
+            <div className='station-bg-circle'></div>
+            <div className='station-sm-circle'></div>
+            <div className='station-pg'></div>
+            <div className='station-sm-circle'></div>
             
+
           </div>
+
+
+
+          <UdiMap
+            stoptask={this.stoptask}
+          />
+
 
     
 
 
 
-          <div className='station'>
-          </div>
-          <div className='map'>
+         
 
-          </div>
+
+        
 
 
 

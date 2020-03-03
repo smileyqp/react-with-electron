@@ -10,7 +10,8 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "electron-store": "^4.0.0"
+    "electron-store": "^4.0.0",
+    "react-amap": "^1.2.8"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -62,18 +62,86 @@
     opacity: 0.4;
 }
 
-
+/**
+** station
+**/
 
 .station{
     width: 100%;
     height: 158px;
-    background: yellow;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
+.station-sm-circle{
+    width: 140px;
+    height: 140px;
+    background-image: url('../images/station_circle_dark.png');
+    background-size: 140px 140px;
+}
+.station-bg-circle{
+    width: 160px;
+    height: 160px; 
+    background-image: url('../images/station_circle_bg.png');
+    background-size: 160px 160px;
+}
+.station-pg{
+    width: 80px;
+    height: 80px;
+    background-size: 80px 80px;
+    animation: Pg-animate infinite 2s linear;
+}
+/**
+** map
+**/
 .map{
     position: absolute;
     bottom: 0;
-    height: 520px;
+    height: 500px;
     width: 100%;
     background-image: url('../images/map_background.png');
-    background-size:100% 520px;
+    background-size:100% 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.map-stopbtn{
+    width: 260px;
+    height: 80px;
+    position: absolute;
+    top:0px;
+    right: 0px;
+    z-index: 10;
+    background-image: url('../images/stop_btn.png');
+    background-size: 260px 80px;
+    margin-top: -5px;
+    margin-right: -3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.map-stopbtn:hover{
+    opacity: 0.7;
+}
+.map-stopbtn:active{
+    opacity: 0.3;
+}
+.map-stopbtn-font{
+    position: absolute;
+    right:50px;
+    font-size:30px;
+}
+.map-container{
+    width:932px;
+    height:458px;
+}
+
+
+
+@keyframes Pg-animate {
+    0% {background-image: url('../images/process_1.png');}
+    33% {background-image: url('../images/process_2.png');}
+    66% {background-image: url('../images/process_3.png');}
+    100% {background-image: url('../images/process_4.png');}
 }
