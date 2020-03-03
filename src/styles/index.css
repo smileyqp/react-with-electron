@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    overflow: hidden;
 }
 .app-container {
     background-color: #282c34;
@@ -150,8 +151,8 @@
     z-index: 10;
     background-image: url('../images/stop_btn.png');
     background-size: 260px 80px;
+    background-position:3px;
     margin-top: -5px;
-    margin-right: -3px;
     display: flex;
     align-items: center;
     justify-content: center;

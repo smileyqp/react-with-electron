@@ -12,7 +12,7 @@ app.on('ready',()=>{
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
-        frame:false,
+        //frame:false,
         webPreferences:{
             nodeIntegration:true,            //是指在render process中可以使用node
             webSecurity: false
