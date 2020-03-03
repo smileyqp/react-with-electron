@@ -10,11 +10,12 @@ app.on('ready',()=>{
     var electronScreen = electron.screen;
     var size = electronScreen.getPrimaryDisplay().workAreaSize;
     mainWindow = new BrowserWindow({
-        width: size.width,
-        height: size.height,
-        // frame:false,
+        width: 1024,
+        height: 768,
+        frame:false,
         webPreferences:{
-            nodeIntegration:true            //是指在render process中可以使用node
+            nodeIntegration:true,            //是指在render process中可以使用node
+            webSecurity: false
         }
     })
 

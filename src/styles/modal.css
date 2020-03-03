@@ -1,0 +1,105 @@
+.modal-container{
+    background:rgba(0,0,0,0.8);
+    width:100%;
+    height:100%;
+    position:fixed;
+    z-index:102;
+    top:0px;
+    left:0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: show-item 0.3s ease-in forwards;/*调用动画，forwards作用：使动画停留在最后的100%*/
+}
+@keyframes show-item {
+    0% {opacity: 0}
+    50% {opacity: 0.5}
+    100% {opacity: 1}
+}
+
+
+.begin-btn{
+    width: 300px;
+    height: 300px;
+    background-image: url('../images/circle_1.png'),url('../images/circle_2.png'),url('../images/circle_3.png'),url('../images/circle_4.png'),url('../images/circle_5.png'),url('../images/circle_6.png');
+    animation: Begin-btn-spin infinite 20s linear;
+}
+.begin-btn:hover{
+    opacity: 0.8;
+}
+.begin-btn:active{
+    opacity: 0.5;
+}
+
+
+
+
+
+
+.carlist-panel{
+    width: 620px;
+    height: 500px;
+    background-image: url('../images/carlist_panel.png');
+    display: flex;
+    flex-direction: column;
+}
+.carlist-panel-top{
+    height: 135px;
+    font-size:25px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(95,250,255,1);
+    display: flex;
+    align-items:flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.carlist-panel-line{
+    height:10px;
+    background-image: url('../images/border.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.carlist-panel-body{
+    height: 340px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content:center;
+    overflow: scroll;
+}
+
+.carlist-panel-bottom{
+    height: 115px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.carlist-bottom-btn{
+    width: 140px;
+    height: 50px;
+    background-image: url('../images/catlist_btn.png');
+    font-size:18px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    line-height: 50px;
+}
+.carlist-bottom-btn:hover{
+    opacity: 0.7;
+}
+.carlist-bottom-btn:active{
+    opacity: 0.3;
+}
+
+
+@keyframes Begin-btn-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

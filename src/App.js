@@ -1,20 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import bg_pic from './images/background.png'
 import shutdown from './images/shutdown.png'
 import {createRos,sentAim,subscribeMsg} from './utils/RosUtils';
 import {Convert} from './utils/ConvertGPS';
 import subscribMsg from './utils/SubscribeMsg'
-
+import login from './utils/action'
+import BeginModal from './components/BeginModal.js';
+import CarlistModal from './components/CarlistModal.js';
+require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      msg:null
+      msg:null,
+      beginVisible:false,
+      carlistVisile:false
     }
   }
   componentWillMount(){
+    login();
     const _this = this;
     subscribeMsg(createRos(),subscribMsg).forEach((item)=>{
       switch(item.name){
@@ -56,22 +60,62 @@ class App extends React.Component{
       }
     })
   }
+  beginClick = () => {
+    this.setState({beginVisible:false,carlistVisile:true})
+  }
+  carlistCancel=()=>{
+    this.setState({beginVisible:true,carlistVisile:false})
+  }
+  carlistConfirm=()=>{
+    this.setState({carlistVisile:false})
+  }
   render(){
     console.log(this.state&&this.state.msg)
+    const beginMdal = (
+      <BeginModal
+          beginVisible={this.state.beginVisible}
+          beginClick={this.beginClick}
+        />
+    );
+
+    const carlistModal = (
+      <CarlistModal
+        carlistVisile={this.state.carlistVisile}
+        carlistCancel={this.carlistCancel}
+        carlistConfirm={this.carlistConfirm}
+      />
+    );
     return (
       <div className="App" >
+          {beginMdal}
+          {carlistModal}
         <div className="app-container" style={{backgroundImage:`url(${bg_pic})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}>
+          
+          
           <div className="header">
             <div className="header-left">
-              <div>速度：10km/h</div>
-              <div>里程：10km</div>
+              <div className='header-speed'>速度：10km/h</div>
+              <div className='header-mile'>里程：10km</div>
             </div>
             <div className="header-right">
-              <div>电量：100%</div>
+              <div className='header-battery'>电量：100%</div>
               <img src={shutdown} className="shutdown"/>
             </div>
             
           </div>
+
+    
+
+
+
+          <div className='station'>
+          </div>
+          <div className='map'>
+
+          </div>
+
+
+
         </div>
       </div>
     )

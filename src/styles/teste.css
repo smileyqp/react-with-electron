@@ -1,0 +1,79 @@
+.App {
+    text-align: center;
+    width:100%;
+    height:100%;
+}
+.app-container {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    font-size:16px;
+    font-family:'PingFang SC';
+    font-weight:bold;
+    color: white;
+}
+.header{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-left{
+    width: 28%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+.header-speed{
+    width:120px;
+    padding-bottom: 10px;
+}
+.header-mile{
+    width:120px;
+    padding-bottom: 10px;
+}
+.header-right{
+    width: 28%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.header-battery{
+    width:180px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.shutdown{
+    width:50px;
+    height:50px;
+    margin-right: 20px;
+}
+.shutdown:hover{
+    opacity: 0.8;
+}
+.shutdown:active{
+    opacity: 0.4;
+}
+
+
+
+/* .station{
+    width: 100%;
+    height: 158px;
+    background: yellow;
+}
+.map{
+    height:300px;
+    width: 100%;
+    background-image: url('../images/map_background.png');
+    background-size:100% 510px;
+} */
