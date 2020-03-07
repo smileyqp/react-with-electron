@@ -8,7 +8,8 @@ import login from './utils/action'
 import BeginModal from './components/BeginModal.js';
 import CarlistModal from './components/CarlistModal.js';
 import Header from './components/Header.js'
-import UdiMap from './components/UdiMap'
+import UdiMap from './components/UdiMap';
+import Map from './components/Map'
 import ImmediatebeginModal from './components/ImmediatebeginModal'
 import ShutdownModal from './components/ShutdownModal'
 
@@ -177,10 +178,14 @@ class App extends React.Component{
           </div>
 
 
+        <Map
+          stoptask={this.stoptask}
+        />
 
-          <UdiMap
+
+          {/* <UdiMap
             stoptask={this.stoptask}
-          />
+          /> */}
 
 
     
