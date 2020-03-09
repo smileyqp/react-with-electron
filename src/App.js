@@ -5,6 +5,7 @@ import {createRos,sentAim,subscribeMsg} from './utils/RosUtils';
 import {Convert} from './utils/ConvertGPS';
 import subscribMsg from './utils/SubscribeMsg'
 import login from './utils/action'
+import carData from './utils/action';
 import BeginModal from './components/BeginModal.js';
 import CarlistModal from './components/CarlistModal.js';
 import Header from './components/Header.js'
@@ -26,7 +27,11 @@ class App extends React.Component{
     }
   }
   componentWillMount(){
-    login();
+    login({
+      callback:(res)=>{
+        console.log(res)
+        this.setState({GPS:res.GPS,Stations:res.Stations})
+      }});
     const _this = this;
     subscribeMsg(createRos(),subscribMsg).forEach((item)=>{
       switch(item.name){

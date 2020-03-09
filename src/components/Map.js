@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 require('../styles/index.css')
+
+var map;
 export default class Map extends Component{
     constructor(props) {
         super(props);
@@ -11,12 +13,14 @@ export default class Map extends Component{
           console.log('初始化')
           console.log(this.refs.map)
           let mapContainer = this.refs.mapContainer;
-          var map = new window.AMap.Map(mapContainer,{
+           map = new window.AMap.Map(mapContainer,{
             resizeEnable: true, //是否监控地图容器尺寸变化
             zoom:11, //初始化地图层级
             center: [116.397428, 39.90923], //初始化地图中心点
             mapStyle: "amap://styles/dark"
         })
+
+        
       }
 
     render(){
