@@ -101,6 +101,10 @@ class App extends React.Component{
   shutdownConfirm = () => {
 
   }
+
+  clickItem = (carid) => {
+    this.setState({choosedItem:carid})
+  }
   render(){
     console.log(this.state&&this.state.msg)
     const beginMdal = (
@@ -116,6 +120,8 @@ class App extends React.Component{
         carlistCancel={this.carlistCancel}
         carlistConfirm={this.carlistConfirm}
         Stations={this.state.Stations&&this.state.Stations}
+        choosedItem={this.state.choosedItem&&this.state.choosedItem}
+        clickItem = {this.clickItem}
       />
     );
 

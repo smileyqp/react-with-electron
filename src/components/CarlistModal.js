@@ -7,7 +7,7 @@ export default class CarlistModal extends Component{
       }
 
     render(){
-        const {carlistVisile,carlistConfirm,carlistCancel,carChoose,Stations} = this.props;
+        const {carlistVisile,carlistConfirm,carlistCancel,choosedItem,Stations,clickItem} = this.props;
 
         return(
             carlistVisile?
@@ -21,7 +21,7 @@ export default class CarlistModal extends Component{
                     <div className='carlist-panel-line'></div>
                     <div className='carlist-panel-body'>
                         {Stations&&Stations.map((item)=>{
-                            return <CarlistItem carname={item.Name}/>
+                            return <CarlistItem carname={item.Name} carid={item.Index} key={item.Index} choosedItem={choosedItem} clickItem={clickItem}/>
                         })}
 
                         {/* <CarlistItem carname='111'/>

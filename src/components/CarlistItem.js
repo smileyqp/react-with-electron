@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames'
 require('../styles/carlistitem.css')
 export default class CarlistItem extends Component{
     constructor(props) {
@@ -6,19 +7,15 @@ export default class CarlistItem extends Component{
       }
 
     render(){
-        const {type,carname} = this.props;
-        switch(type){
-            case 'choosed':
-                return <div className='carlist-item carlist-item-choosed'>
-                    <div className='carlist-item-inner-choosed'>{carname}</div>
-                </div>
-                break;
-            default:
-                return<div className='carlist-item'>
-                    <div className='carlist-item-inner'>{carname}</div>
-                </div>
-                break;
-        }
+        const {carname,carid,choosedItem,clickItem} = this.props;
+
+        const choosed = choosedItem==carid?true:false;
+
+        return(
+            <div className={classnames('carlist-item',{'carlist-item-choosed':choosed})}>
+                <div className={classnames({'carlist-item-inner':!choosed},{'carlist-item-inner-choosed':choosed})} onClick={()=>{clickItem(carid)}}>{carname}</div>
+            </div>
+        )
     }
 }
 
