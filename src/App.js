@@ -13,6 +13,7 @@ import UdiMap from './components/UdiMap';
 import Map from './components/Map'
 import ImmediatebeginModal from './components/ImmediatebeginModal'
 import ShutdownModal from './components/ShutdownModal'
+import StationPanel from './components/StationPanel'
 
 require('./styles/index.css')
 class App extends React.Component{
@@ -114,6 +115,7 @@ class App extends React.Component{
         carlistVisile={this.state.carlistVisile}
         carlistCancel={this.carlistCancel}
         carlistConfirm={this.carlistConfirm}
+        Stations={this.state.Stations&&this.state.Stations}
       />
     );
 
@@ -149,43 +151,14 @@ class App extends React.Component{
             mile={this.state.mile}
             battery={this.state.battery}
           />
-          <div className='station'>
-            <div className='station-sm-circle station-sm-circle-dark'>
-              <div className='station-font-container'>
-                <div className='station-font-item'>站点1</div>
-              </div>
-            </div>
-            <div className='station-pg'></div>
-            <div className='station-sm-circle station-sm-circle-dark'>
-              <div className='station-font-container'>
-                <div className='station-font-item'>站点1</div>
-              </div>
-            </div>
-            <div className='station-bg-circle'>
-              <div className='station-bg-title'>起始站</div>
-              <div className='station-font-container'>
-                  <div className='station-font-item station-bg-color'>站点1站阿都是大手笔点2站点3</div>
-              </div>
-            </div>
-            <div className='station-sm-circle station-sm-circle-light'>
-              <div className='station-font-container'>
-                  <div className='station-font-item'>站点1站阿都是大手笔点2站点3</div>
-              </div>
-            </div>
-            <div className='station-pg'></div>
-            <div className='station-sm-circle station-sm-circle-light'>
-              <div className='station-font-container'>
-                <div className='station-font-item'>站点1</div>
-              </div>
-            </div>
-            
-
-          </div>
-
-
-        <Map
-          stoptask={this.stoptask}
-        />
+          <StationPanel
+            stationsArr = {this.state.stationsArr&&this.state.stationsArr}
+          />
+          <Map
+            stoptask={this.stoptask}
+            GPS={this.state.GPS&&this.state.GPS}
+            Stations={this.state.Stations}
+          />
 
 
           {/* <UdiMap

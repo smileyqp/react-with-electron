@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import stationpic from '../images/station_pic.png';
+import getMapcenter from '../utils/utils'
 require('../styles/index.css')
 
 var map;
@@ -17,15 +19,58 @@ export default class Map extends Component{
             resizeEnable: true, //是否监控地图容器尺寸变化
             zoom:11, //初始化地图层级
             center: [116.397428, 39.90923], //初始化地图中心点
-            mapStyle: "amap://styles/dark"
+            mapStyle: "amap://styles/grey"
         })
+      }
 
-        
+
+      addStations = (stations) => {
+          console.log(stations)
+        if(stations != null){
+           stations.forEach((item)=>{
+                var marker = new window.AMap.Marker({
+                    icon:stationpic,
+                    position: [item.GPS.Longitude,item.GPS.Latitude],
+                    offset: new window.AMap.Pixel(-10,-10), 
+                })
+                marker.setLabel({
+                    offset: new window.AMap.Pixel(0, 0),  //设置文本标注偏移量
+                    content: `<div>${item.Name}</div>`, //设置文本标注内容
+                    direction: 'bottom' //设置文本标注方位
+                });
+               map.add(marker)
+           })
+        }
+      }
+
+      addGPS = (gps) => {
+            console.log(gps)
+            if(gps != null){
+                map.setCenter(getMapcenter(gps))
+                map.setZoom(15)
+                var path = gps.map((item)=>{
+                    return [item.Longitude,item.Latitude];
+                })
+                var gpsPolygon = new window.AMap.Polygon({
+                    path: path,
+                    isOutline: true,
+                    outlineColor: '#ffeeff',
+                    borderWeight: 3,
+                    strokeColor: "grey", 
+                    strokeOpacity: 0.6,
+                    strokeWeight: 6,
+                    strokeStyle: "solid",
+                    fillColor: 'transparent',
+                })
+                //map.add(gpsPolygon)
+
+            }
       }
 
     render(){
-        const {stoptask} = this.props;
-
+        const {stoptask,GPS,Stations} = this.props;
+        {Stations?this.addStations(Stations):this.addStations(null)}
+        {GPS?this.addGPS(GPS):this.addGPS(null)}
         return(
             <div className='map'>
                 <div className='map-stopbtn btn' onClick={stoptask}>

@@ -7,7 +7,7 @@ export default class CarlistModal extends Component{
       }
 
     render(){
-        const {carlistVisile,carlistConfirm,carlistCancel,carChoose} = this.props;
+        const {carlistVisile,carlistConfirm,carlistCancel,carChoose,Stations} = this.props;
 
         return(
             carlistVisile?
@@ -20,21 +20,25 @@ export default class CarlistModal extends Component{
                     </div>
                     <div className='carlist-panel-line'></div>
                     <div className='carlist-panel-body'>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111' type='choosed'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
-                        <CarlistItem carname='111'/>
+                        {Stations&&Stations.map((item)=>{
+                            return <CarlistItem carname={item.Name}/>
+                        })}
+
+                        {/* <CarlistItem carname='111'/>
                         <CarlistItem carname='111'/>
                         <CarlistItem carname='111'/>
                         <CarlistItem carname='111'/>
                         <CarlistItem carname='111'/>
                         <CarlistItem carname='111' type='choosed'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111'/>
+                        <CarlistItem carname='111' type='choosed'/> */}
                     </div>
                     <div className='carlist-panel-bottom'>
                         <div className='carlist-bottom-btn btn' onClick={carlistCancel}>取消</div>

@@ -21,11 +21,48 @@
 .begin-btn{
     width: 300px;
     height: 300px;
-    background-image: url('../images/circle_1.png'),url('../images/circle_2.png'),url('../images/circle_3.png'),url('../images/circle_4.png'),url('../images/circle_5.png'),url('../images/circle_6.png');
-    animation: Begin-btn-spin infinite 20s linear;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.begin-font{
+    width: 150px;
+    height: 150px;
+    background-image: url('../images/begin.png');
+    background-size: 150px 150px;
+}
+.begin-spin-circle{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    background-size: 300px 300px;
+}
+.circle-a{
+    background-image: url('../images/circle_1.png');
+    animation: Begin-btn-spin-right infinite 20s linear;
+}
+.circle-b{
+    background-image: url('../images/circle_2.png');
+    animation: Begin-btn-spin-right infinite 20s linear;
 
-
+}
+.circle-c{
+    background-image: url('../images/circle_3.png');
+    animation: Begin-btn-spin-left infinite 20s linear;
+}
+.circle-d{
+    background-image: url('../images/circle_4.png');
+    animation: Begin-btn-spin-left infinite 20s linear;
+}
+.circle-e{
+    background-image: url('../images/circle_5.png');
+    animation: Begin-btn-spin-left infinite 20s linear;
+}
+.circle-f{
+    background-image: url('../images/circle_6.png');
+    animation: Begin-btn-spin-right infinite 20s linear;
+}
 
 
 
@@ -178,7 +215,7 @@
     opacity: 0.3;
 }
 
-@keyframes Begin-btn-spin {
+@keyframes Begin-btn-spin-right {
     from {
       transform: rotate(0deg);
     }
@@ -186,4 +223,12 @@
       transform: rotate(360deg);
     }
   }
-  
+
+  @keyframes Begin-btn-spin-left {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
