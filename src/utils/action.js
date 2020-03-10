@@ -23,7 +23,7 @@ export default function login({callback}){
 
 
 async function carData({callback}){
-    const data =await request('/search_cars/?Id=20190910',{ method: 'GET'});
+    const data =await request('/search_cars/?Id=20190101',{ method: 'GET'});
     areaData(data.Data[0].AreaName,callback)
 }
 

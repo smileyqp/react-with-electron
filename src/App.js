@@ -14,17 +14,21 @@ import Map from './components/Map'
 import ImmediatebeginModal from './components/ImmediatebeginModal'
 import ShutdownModal from './components/ShutdownModal'
 import StationPanel from './components/StationPanel'
+import Queue from './utils/Queue';
+import getShowstationlist from './utils/utils'
 
+const stationQUeue = new Queue();
 require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       msg:null,
-      beginVisible:false,
+      beginVisible:true,
       carlistVisile:false,
       immediatebeginVisible:false,
-      shutdownVisible:false
+      shutdownVisible:false,
+      curStationkey:null
     }
   }
   componentWillMount(){
@@ -78,13 +82,53 @@ class App extends React.Component{
     this.setState({beginVisible:false,carlistVisile:true})
   }
   carlistCancel=()=>{
-    this.setState({beginVisible:true,carlistVisile:false})
+    this.setState({beginVisible:true,carlistVisile:false,choosedItem:null})
   }
-  carlistConfirm=()=>{
-    this.setState({carlistVisile:false})
+  carlistConfirm=()=>{   
+    if(this.state.choosedItem != null){
+      this.setState({carlistVisile:false})
+      this.state.Stations.forEach((item,key)=>{
+        if(item.Index == this.state.choosedItem){
+          this.setState({curStationkey:key,immediatebeginVisible:true})
+          this.getShowstations(key);
+        }
+      })
+    }  
+    this.setState({choosedItem:null})  
   }
+
+
+  getShowstations = (curkey) => {
+    var len = this.state.Stations.length;
+    var keyIndex = this.state.Stations[curkey].Index;
+    var arr = [];
+    stationQUeue.init(this.state.Stations)
+    this.state.Stations.forEach((item,key)=>{
+      if(item.Index == keyIndex){
+        if(key != 0){
+          arr.push(this.state.Stations[stationQUeue.frontele(key-1)].Name)
+        }else{
+          arr.push(this.state.Stations[stationQUeue.frontele(stationQUeue.frontele(key))].Name)
+        }
+        arr.push(this.state.Stations[stationQUeue.frontele(key)].Name)
+        arr.push(this.state.Stations[stationQUeue.curele(key)].Name)
+        arr.push(this.state.Stations[stationQUeue.nextele(key)].Name)
+        if(key == len-1){
+          arr.push(this.state.Stations[stationQUeue.nextele(stationQUeue.nextele(key))].Name)
+        }else{
+          arr.push(this.state.Stations[stationQUeue.nextele(key+1)].Name)
+        }
+        this.setState({stationsArr:arr})
+      }
+    })
+  }
+
+
+
+
+
   stoptask = () => {
-    this.setState({beginVisible:true})
+    this.setState({beginVisible:true,curStationkey:null})
   }
   immediatebeginClick = () => {
     this.setState({immediatebeginVisible:false})
@@ -105,6 +149,7 @@ class App extends React.Component{
   clickItem = (carid) => {
     this.setState({choosedItem:carid})
   }
+  
   render(){
     console.log(this.state&&this.state.msg)
     const beginMdal = (
@@ -149,7 +194,7 @@ class App extends React.Component{
           {shutdownModal}
 
 
-        <div className="app-container" style={{backgroundImage:`url(${bg_pic})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}>
+        <div className="app-container">
           <Header
             shutdown={shutdown}
             shutdownBtn={this.shutdownBtn}
