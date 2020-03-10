@@ -20,18 +20,8 @@ export const createRos = () => {
 }
 
 
-export const sentAim = (ros,str) => {
-    // const stationFile = readData('stations.txt')
-    // const stationsAll = JSON.parse(stationFile)
-    // for(const i in stationsAll){
-    //     if( String(stationsAll[i].Index) === str){
-    //         console.log(">>>>>>>>>>下发站点:"+stationsAll[i].Name)
-    //         warnfunc('您即将去:'+stationsAll[i].Name+' !',3000)
-    //         var sendPosition = stationsAll[i].Position;
-    //     }
-     
-    // }
-    // console.log(sendPosition)
+export const sentAim = (str) => {
+    console.log(ros)
     var cmdVel = new window.ROSLIB.Topic({
         ros : ros,
         name : '/global_plan/global_goal',

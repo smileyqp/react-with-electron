@@ -18,6 +18,7 @@ import Queue from './utils/Queue';
 import getShowstationlist from './utils/utils'
 
 const stationQUeue = new Queue();
+var timer = null;
 require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
@@ -91,6 +92,7 @@ class App extends React.Component{
         if(item.Index == this.state.choosedItem){
           this.setState({curStationkey:key,immediatebeginVisible:true})
           this.getShowstations(key);
+          this.debounce();
         }
       })
     }  
@@ -123,15 +125,31 @@ class App extends React.Component{
     })
   }
 
-
-
+  debounce = () => {
+    var numTimer = 11;
+    if(timer !== null){
+        clearInterval(timer)
+    }
+    var _this = this;
+    timer = setInterval(function(){
+        numTimer >0 ? numTimer-- :clearInterval(timer);
+        _this.setState({timewait:numTimer})
+        if(numTimer == 0){
+          console.log(numTimer)
+          _this.setState({immediatebeginVisible:false})
+          sentAim(_this.state.Stations[_this.state.curStationkey].Position)
+        }
+    }, 1000);
+  }
 
 
   stoptask = () => {
     this.setState({beginVisible:true,curStationkey:null})
   }
   immediatebeginClick = () => {
-    this.setState({immediatebeginVisible:false})
+    clearInterval(timer)
+    this.setState({immediatebeginVisible:false,timewait:null})
+    sentAim(this.state.Stations[this.state.curStationkey].Position)
   }
 
   shutdownBtn = () => {
@@ -174,6 +192,7 @@ class App extends React.Component{
         <ImmediatebeginModal
           immediatebeginVisible={this.state.immediatebeginVisible}
           immediatebeginClick={this.immediatebeginClick}
+          timewait = {this.state.timewait&&this.state.timewait}
         />
       );
 
