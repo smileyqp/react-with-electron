@@ -19,6 +19,8 @@ import getShowstationlist from './utils/utils'
 
 const stationQUeue = new Queue();
 var timer = null;
+var lastdate = null;
+var curdate = null;
 require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
@@ -44,14 +46,14 @@ class App extends React.Component{
         case subscribMsg[0].name:
           item.subscribe(function(msg){
             console.log(msg)
-            var cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y)
+            var cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y)//ok mapcenter
             _this.setState({cargps:cargps})
           })
           break;
         case subscribMsg[1].name:
           item.subscribe(function(msg){
             console.log(msg)
-            _this.setState({battery:msg.battery_percentage})
+            _this.setState({battery:msg.battery_percentage})//ok battery
           })
           break;
         case subscribMsg[2].name:
@@ -62,16 +64,39 @@ class App extends React.Component{
           break;
         case subscribMsg[3].name:
           item.subscribe(function(msg){
-            console.log(msg)
+            console.log(msg)  //任务结束通知
+            if(lastdate == null){
+              var nextStation = this.getNextcurStationkey(this.state.curStationkey,this.state.Stations);
+              this.getShowstations(nextStation)
+              this.setState({immediatebeginVisible:true,curStationkey:nextStation})
+              this.debounce();
+              lastdate = new Date().getTime();
+            }else{
+              curdate = new Date().getTime;
+              if(parseInt(curdate - lastdate)/1000 > 5){
+                var nextStation = this.getNextcurStationkey(this.state.curStationkey,this.state.Stations);
+                this.getShowstations(nextStation)
+                this.setState({immediatebeginVisible:true,curStationkey:nextStation})
+                this.debounce();
+                lastdate = curdate;
+              }
+            }
+
             _this.setState({msg:msg})
           })
           break;
           case subscribMsg[4].name:
             item.subscribe(function(msg){
               console.log(msg)
-              _this.setState({speed:msg.twist.twist.linear.x.toFixed(2)})
+              _this.setState({speed:msg.twist.twist.linear.x.toFixed(2)})//ok speed
             })
             break;
+          case subscribMsg[5].name:
+            item.subscribe(function(msg){
+              console.log(msg)
+              //_this.setState({mile:msg})
+            })
+          break;
         default:
           item.subscribe(function(msg){
             console.log('Not a subscribe msg'+msg)
@@ -123,6 +148,14 @@ class App extends React.Component{
         this.setState({stationsArr:arr})
       }
     })
+  }
+
+  getNextcurStationkey = (key,arr) => {
+    if(key == arr.len.length - 1){
+      return 1
+    }else{
+      return key +1
+    }
   }
 
   debounce = () => {
@@ -228,6 +261,7 @@ class App extends React.Component{
             stoptask={this.stoptask}
             GPS={this.state.GPS&&this.state.GPS}
             Stations={this.state.Stations}
+            cargps={this.state.cargps&&this.state.cargps}
           />
 
 

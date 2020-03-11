@@ -1,6 +1,6 @@
 // 墨卡托x y 转经纬度
 //使用时调用Convert()函数
-
+import config from './config'
 var _IterativeTimes = 10;   //迭代次数为10
 var _IterativeValue = 0;      //迭代初始值
 var _B0 = 0;
@@ -102,8 +102,8 @@ function ConvertToGPS(x,y) {
 
 // 传入x y，返回的是数组 [经度，纬度]
 export const Convert  = (x,y) => {
-    b0 = 22.6533211850;
-    l0 = 114.0596666162;
+    b0 = config.mapConvert.b0;
+    l0 = config.mapConvert.l0;
     setAB(6378137.0, 6356752.3142);
     SetB0(DegreeToRad(b0));
     SetL0(DegreeToRad(l0));

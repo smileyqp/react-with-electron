@@ -66,11 +66,15 @@ export default class Map extends Component{
 
             }
       }
+      setMapenter = (cargps) => {
+          map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
+      }
 
     render(){
-        const {stoptask,GPS,Stations} = this.props;
+        const {stoptask,GPS,Stations,cargps} = this.props;
         {Stations?this.addStations(Stations):this.addStations(null)}
         {GPS?this.addGPS(GPS):this.addGPS(null)}
+        {cargps&&this.setMapenter(cargps)}
         return(
             <div className='map'>
                 <div className='map-stopbtn btn' onClick={stoptask}>

@@ -1,3 +1,4 @@
+import SubscribMsg from './SubscribeMsg'
 var ros;
 export const createRos = () => {
     if(ros){return ros}
@@ -24,8 +25,8 @@ export const sentAim = (str) => {
     console.log(ros)
     var cmdVel = new window.ROSLIB.Topic({
         ros : ros,
-        name : '/global_plan/global_goal',
-        messageType : 'geometry_msgs/Pose'
+        name : SubscribMsg[6].name,
+        messageType : SubscribMsg[6].messageType
     });
     
     var twist = new window.ROSLIB.Message({

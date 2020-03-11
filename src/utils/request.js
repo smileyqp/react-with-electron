@@ -1,3 +1,4 @@
+import config from './config'
 const codeMessage = {
     200: '服务器成功返回请求的数据。',
     201: '新建或修改数据成功。',
@@ -64,7 +65,7 @@ export default function request(url, options) {
             };
         }
     }
-    url = 'http://120.78.66.145/v1'+url;
+    url = config.serverurl+url;
     return fetch(url, newOptions)
         .then(checkStatus)
         .then(response => {
