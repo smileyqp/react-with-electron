@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import stationpic from '../images/station_pic.png';
-import getMapcenter from '../utils/utils'
+import caricon from '../images/car.png'
+import {getMapcenter} from '../utils/utils'
 require('../styles/index.css')
 
 var map;
@@ -62,18 +63,31 @@ export default class Map extends Component{
                     strokeStyle: "solid",
                     fillColor: 'transparent',
                 })
+                var carmarker = new window.AMap.Marker({
+                    icon:caricon,
+                    position: getMapcenter(gps),
+                    offset: new window.AMap.Pixel(-10,-10), 
+                })
+                map.add(carmarker)
+                carmarker.setAngle(90)
                 //map.add(gpsPolygon)
 
             }
       }
       setMapenter = (cargps) => {
           map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
+          var marker = new window.AMap.Marker({
+            icon:caricon,
+            position: cargps,
+            offset: new window.AMap.Pixel(-10,-10), 
+        })
+        map.add(marker)
       }
 
     render(){
         const {stoptask,GPS,Stations,cargps} = this.props;
         {Stations?this.addStations(Stations):this.addStations(null)}
-        {GPS?this.addGPS(GPS):this.addGPS(null)}
+        {GPS&&this.addGPS(GPS)}
         {cargps&&this.setMapenter(cargps)}
         return(
             <div className='map'>

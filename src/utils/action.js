@@ -1,6 +1,5 @@
 import request from './request';
 import windowNotification from '../components/windowNotification';
-import getCarname from './utils';
 import writeData from './fileHelper'
 import config from './config'
 
@@ -17,7 +16,7 @@ export default function login({callback}){
     data.then(function(value){
       console.log(value)
       //windowNotification(getCarname(),'asd','')
-        console.log(getCarname())
+        // console.log(getCarname())
         carData({callback})
     })
 }

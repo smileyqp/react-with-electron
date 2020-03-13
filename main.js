@@ -1,4 +1,4 @@
-const {app,BrowserWindow,session} = require('electron')
+const {app,BrowserWindow,ipcMain} = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')
 
@@ -39,7 +39,8 @@ app.on('ready',()=>{
 
     const urlLocation = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, './index.html')}`
     mainWindow.loadURL(urlLocation); 
-    mainWindow.on('close',()=>{
+    ipcMain.on('close',()=>{
+        mainWindow.close();
         mainWindow = null;
     })
 })

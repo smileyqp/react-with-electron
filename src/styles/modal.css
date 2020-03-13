@@ -120,14 +120,13 @@
 
 
 .immediate-container{
-    width: 250px;
+    width: 410px;
     height:370px;
     position: absolute;
     bottom: 74px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
 .immediate-time{
     width: 250px;
@@ -141,10 +140,14 @@
     line-height: 250px;
     text-align: center;
 }
+.immediate-btn-con{
+    display: flex;
+    flex-direction: row;
+}
 .immediate-btn{
     width: 200px;
     height: 80px;
-    background-image: url('../images/immediate-btn.png');
+    
     background-size: 200px 80px;
     font-size:30px;
     font-family:'PingFang SC';
@@ -152,6 +155,12 @@
     color:rgba(255,255,255,1);
     text-align: center;
     line-height: 80px;
+}
+.immediate-btn-shutdown{
+    background-image: url('../images/immediate-shutdown.png');
+}
+.immediate-btn-begin{
+    background-image: url('../images/immediate-btn.png');
 }
 .immediate-btn:hover{
     opacity: 0.7;

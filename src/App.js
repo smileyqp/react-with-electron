@@ -9,13 +9,16 @@ import carData from './utils/action';
 import BeginModal from './components/BeginModal.js';
 import CarlistModal from './components/CarlistModal.js';
 import Header from './components/Header.js'
-import UdiMap from './components/UdiMap';
 import Map from './components/Map'
 import ImmediatebeginModal from './components/ImmediatebeginModal'
 import ShutdownModal from './components/ShutdownModal'
 import StationPanel from './components/StationPanel'
 import Queue from './utils/Queue';
-import getShowstationlist from './utils/utils'
+import {getNextcurStationkey} from './utils/utils'
+
+
+
+const { remote, ipcRenderer } = window.require('electron')
 
 const stationQUeue = new Queue();
 var timer = null;
@@ -66,7 +69,7 @@ class App extends React.Component{
           item.subscribe(function(msg){
             console.log(msg)  //任务结束通知
             if(lastdate == null){
-              var nextStation = this.getNextcurStationkey(this.state.curStationkey,this.state.Stations);
+              var nextStation = getNextcurStationkey(this.state.curStationkey,this.state.Stations);
               this.getShowstations(nextStation)
               this.setState({immediatebeginVisible:true,curStationkey:nextStation})
               this.debounce();
@@ -74,7 +77,7 @@ class App extends React.Component{
             }else{
               curdate = new Date().getTime;
               if(parseInt(curdate - lastdate)/1000 > 5){
-                var nextStation = this.getNextcurStationkey(this.state.curStationkey,this.state.Stations);
+                var nextStation = getNextcurStationkey(this.state.curStationkey,this.state.Stations);
                 this.getShowstations(nextStation)
                 this.setState({immediatebeginVisible:true,curStationkey:nextStation})
                 this.debounce();
@@ -150,13 +153,6 @@ class App extends React.Component{
     })
   }
 
-  getNextcurStationkey = (key,arr) => {
-    if(key == arr.len.length - 1){
-      return 1
-    }else{
-      return key +1
-    }
-  }
 
   debounce = () => {
     var numTimer = 11;
@@ -177,6 +173,10 @@ class App extends React.Component{
 
 
   stoptask = () => {
+    if(timer !== null){clearInterval(timer)}
+    if(this.state.immediatebeginVisible){
+      this.setState({immediatebeginVisible:false,timewait:null})
+    }
     this.setState({beginVisible:true,curStationkey:null})
   }
   immediatebeginClick = () => {
@@ -194,7 +194,8 @@ class App extends React.Component{
   }
 
   shutdownConfirm = () => {
-
+    console.log('ok')
+    ipcRenderer.send('close')
   }
 
   clickItem = (carid) => {
@@ -226,6 +227,7 @@ class App extends React.Component{
           immediatebeginVisible={this.state.immediatebeginVisible}
           immediatebeginClick={this.immediatebeginClick}
           timewait = {this.state.timewait&&this.state.timewait}
+          stoptask={this.stoptask}
         />
       );
 
@@ -263,21 +265,7 @@ class App extends React.Component{
             Stations={this.state.Stations}
             cargps={this.state.cargps&&this.state.cargps}
           />
-
-
-          {/* <UdiMap
-            stoptask={this.stoptask}
-          /> */}
-
-
-    
-
-
-
-         
-
-
-        
+   
 
 
 

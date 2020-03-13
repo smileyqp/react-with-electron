@@ -5,7 +5,7 @@
 // }
 // const {ipcRenderer} = require('electron')
 
-export default function getMapcenter(gps){
+export const getMapcenter = (gps) => {
     if(Array.isArray(gps)){
         var zoomLon = 0;
         var zoomLat = 0;
@@ -17,5 +17,13 @@ export default function getMapcenter(gps){
         return [zoomLon/len,zoomLat/len]
     }
 }
+
+export const getNextcurStationkey = (key,arr) => {
+    if(key == arr.len.length - 1){
+      return 1
+    }else{
+      return key +1
+    }
+  }
 
 
