@@ -19,7 +19,8 @@ export const getMapcenter = (gps) => {
 }
 
 export const getNextcurStationkey = (key,arr) => {
-    if(key == arr.len.length - 1){
+  console.log(arr)
+    if(key == arr.length - 1 && arr != null){
       return 1
     }else{
       return key +1

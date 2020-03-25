@@ -15,6 +15,8 @@ import ShutdownModal from './components/ShutdownModal'
 import StationPanel from './components/StationPanel'
 import Queue from './utils/Queue';
 import {getNextcurStationkey} from './utils/utils'
+import stationpic from './images/station_pic.png';
+import {getMapcenter} from './utils/utils'
 
 
 
@@ -24,6 +26,7 @@ const stationQUeue = new Queue();
 var timer = null;
 var lastdate = null;
 var curdate = null;
+var cargps,battery,speed,mile =  null;
 require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
@@ -34,55 +37,86 @@ class App extends React.Component{
       carlistVisile:false,
       immediatebeginVisible:false,
       shutdownVisible:false,
-      curStationkey:null
+      curStationkey:null,
+      Stations:null,
+      timewait:10
     }
   }
-  componentWillMount(){
+  componentDidMount(){
     login({
       callback:(res)=>{
         console.log(res)
         this.setState({GPS:res.GPS,Stations:res.Stations})
+        if(res.GPS != null){
+          window.map.setCenter(getMapcenter(res.GPS))
+        }
+        if(res.Stations != null){
+          window.map.setZoom(15)
+          console.log(window.map)
+          res.Stations.forEach((item)=>{
+            var marker = new window.AMap.Marker({
+                icon:stationpic,
+                position: [item.GPS.Longitude,item.GPS.Latitude],
+                offset: new window.AMap.Pixel(-10,-10), 
+            })
+            marker.setLabel({
+                offset: new window.AMap.Pixel(0, 0),  //设置文本标注偏移量
+                content: `<div>${item.Name}</div>`, //设置文本标注内容
+                direction: 'bottom' //设置文本标注方位
+            });
+           window.map.add(marker)
+       })
+        }
       }});
     const _this = this;
     subscribeMsg(createRos(),subscribMsg).forEach((item)=>{
+      console.log(item)
+      console.log(item.name)
       switch(item.name){
         case subscribMsg[0].name:
           item.subscribe(function(msg){
-            console.log(msg)
-            var cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y)//ok mapcenter
-            _this.setState({cargps:cargps})
+            // console.log('0000000'+msg)
+            // console.log(Convert(msg.pose.pose.position.x,msg.pose.pose.position.y))
+            cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y)//ok mapcenter
+            //window.map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
+            window.carmarker.setPosition(cargps)
           })
-          break;
+        break;
         case subscribMsg[1].name:
           item.subscribe(function(msg){
-            console.log(msg)
-            _this.setState({battery:msg.battery_percentage})//ok battery
+            //console.log('1111111111111'+msg.data[0])
+            battery = msg.data[0];
+            _this.setState({battery: msg.data[0]})//ok battery
           })
           break;
         case subscribMsg[2].name:
           item.subscribe(function(msg){
-            console.log(msg)
-            _this.setState({msg:msg})
+            //console.log('222222'+msg)
+            //_this.setState({msg:msg})
           })
           break;
         case subscribMsg[3].name:
           item.subscribe(function(msg){
-            console.log(msg)  //任务结束通知
-            if(lastdate == null){
-              var nextStation = getNextcurStationkey(this.state.curStationkey,this.state.Stations);
-              this.getShowstations(nextStation)
-              this.setState({immediatebeginVisible:true,curStationkey:nextStation})
-              this.debounce();
+            console.log('task end333333333333:'+msg)  //任务结束通知
+            if(lastdate == null&&_this.state.curStationkey !=  null && _this.state.Stations != null){
+              var nextStation = getNextcurStationkey(_this.state.curStationkey,_this.state.Stations);
+              _this.getShowstations(nextStation)
+              _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
+              _this.debounce();
               lastdate = new Date().getTime();
             }else{
-              curdate = new Date().getTime;
+              curdate = new Date().getTime();
+              console.log(curdate)
+                console.log(lastdate)
+                console.log(typeof lastdate)
+                console.log(parseInt(curdate - lastdate)/1000)
               if(parseInt(curdate - lastdate)/1000 > 5){
-                var nextStation = getNextcurStationkey(this.state.curStationkey,this.state.Stations);
-                this.getShowstations(nextStation)
-                this.setState({immediatebeginVisible:true,curStationkey:nextStation})
-                this.debounce();
-                lastdate = curdate;
+                var nextStation = getNextcurStationkey(_this.state.curStationkey,_this.state.Stations);
+                _this.getShowstations(nextStation)
+                _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
+                _this.debounce();
               }
+              lastdate = curdate;
             }
 
             _this.setState({msg:msg})
@@ -90,16 +124,20 @@ class App extends React.Component{
           break;
           case subscribMsg[4].name:
             item.subscribe(function(msg){
-              console.log(msg)
-              _this.setState({speed:msg.twist.twist.linear.x.toFixed(2)})//ok speed
+              //console.log('44444444444444   m/s  '+ msg.data[1]*3.6)
+              speed = (msg.data[1]*3.6).toFixed(1);
+              _this.setState({speed:(msg.data[1]*3.6).toFixed(1)})
+              //_this.setState({speed:msg.twist.twist.linear.x.toFixed(2)})//ok speed
             })
             break;
           case subscribMsg[5].name:
             item.subscribe(function(msg){
-              console.log(msg)
+              mile = msg.data[0].toFixed(1);
+              _this.setState({mile:msg.data[0].toFixed(1)})
+              //console.log('5555mile：'+msg.data[0])
               //_this.setState({mile:msg})
             })
-          break;
+        break;
         default:
           item.subscribe(function(msg){
             console.log('Not a subscribe msg'+msg)
@@ -203,7 +241,7 @@ class App extends React.Component{
   }
   
   render(){
-    console.log(this.state&&this.state.msg)
+
     const beginMdal = (
       <BeginModal
           beginVisible={this.state.beginVisible}
@@ -252,9 +290,9 @@ class App extends React.Component{
           <Header
             shutdown={shutdown}
             shutdownBtn={this.shutdownBtn}
-            speed={this.state.speed}
-            mile={this.state.mile}
-            battery={this.state.battery}
+            speed={this.state.speed&&this.state.speed}
+            mile={this.state.mile&&this.state.mile}
+            battery={this.state.battery&&this.state.battery}
           />
           <StationPanel
             stationsArr = {this.state.stationsArr&&this.state.stationsArr}
@@ -263,7 +301,7 @@ class App extends React.Component{
             stoptask={this.stoptask}
             GPS={this.state.GPS&&this.state.GPS}
             Stations={this.state.Stations}
-            cargps={this.state.cargps&&this.state.cargps}
+            cargps={cargps&&cargps}
           />
    
 

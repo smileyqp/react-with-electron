@@ -118,6 +118,7 @@
     width: 100%;
     line-height: 30px;
     text-align: center;
+    
 }
 .station-font-item:hover{
     animation: rotateFont 5s linear infinite;

@@ -12,7 +12,11 @@ export default class ImmediatebeginModal extends Component{
             immediatebeginVisible?
             <div className='modal-container'>
                 <div className='immediate-container'>
-                    <div className='immediate-time'>{timewait}s</div>
+                    <div className='immediate-time'>
+                        <div className = 'immediate-time-circle'>{timewait}s</div>
+                        <div className = 'immediate-time-circle immediate-time-circle-1'></div>
+                        <div className = 'immediate-time-circle immediate-time-circle-2'></div>
+                    </div>
                     <div className='immediate-btn-con'>
                         <div className='immediate-btn immediate-btn-shutdown' onClick={stoptask}>终止行程</div>
                         <div className='immediate-btn immediate-btn-begin' onClick={immediatebeginClick}>立即启动</div>

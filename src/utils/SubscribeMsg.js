@@ -5,7 +5,7 @@ const SubscribMsg = [
         messageType : 'nav_msgs/Odometry'
     },{
         name : '/chassis/bms',//电池电量
-        messageType : 'udrive_msgs/ChassisBms'
+        messageType : 'std_msgs/Float32MultiArray'
     },{
         name : '/global_plan/global_path',//全局规划路径
         messageType : 'nav_msgs/Path'
@@ -13,11 +13,11 @@ const SubscribMsg = [
         name : '/RobotPort_GetReached_Info',//任务结束通知
         messageType : 'std_msgs/String'
     },{
-        name : '/golfcar/odom',//速度
-        messageType : 'nav_msgs/Odometry'
+        name : '/chassis/motor',//速度
+        messageType : 'std_msgs/Float32MultiArray'
     },{
-        name : '/odemetry_distance',//mile
-        messageType : 'std_msgs/Float32'
+        name : '//chassis/odometer',//mile
+        messageType : 'std_msgs/Float32MultiArray'
     },
     {
         name : '/global_plan/global_goal',//下发

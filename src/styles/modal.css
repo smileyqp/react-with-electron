@@ -131,14 +131,28 @@
 .immediate-time{
     width: 250px;
     height: 250px;
-    background-image: url('../images/immediate-time.png'),url('../images/immediate-time_1.png');
-    background-size: 250px 250px;
     font-size:60px;
     font-family:'PingFang SC';
     font-weight:bold;
     color:rgba(36,255,255,1);
     line-height: 250px;
     text-align: center;
+    
+}
+
+.immediate-time-circle{
+    width: 250px;
+    height: 250px;
+    background-size: 250px 250px;
+    position: absolute;
+}
+.immediate-time-circle-1{
+    background-image: url('../images/immediate-time_1.png');
+    animation: Begin-btn-spin-right infinite 20s linear;
+}
+.immediate-time-circle-2{
+    background-image: url('../images/immediate-time.png');
+    animation: Begin-btn-spin-left infinite 20s linear;
 }
 .immediate-btn-con{
     display: flex;
@@ -169,10 +183,10 @@
     opacity: 0.3;
 }
 .immediate-warn{
-    width: 250px;
+    width: 360px;
     height: 40px;
     background-image: url('../images/immediate-warn.png');
-    background-size: 250px 40px;
+    background-size: 360px 40px;
     font-size:12px;
     font-family:'PingFang SC';
     font-weight:bold;

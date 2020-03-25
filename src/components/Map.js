@@ -4,29 +4,39 @@ import caricon from '../images/car.png'
 import {getMapcenter} from '../utils/utils'
 require('../styles/index.css')
 
-var map;
+var map,carmarker;
 export default class Map extends Component{
     constructor(props) {
         super(props);
       }
       componentDidMount(){
           this.init();
+          console.log(this.props)
+          console.log('000000000000000000000000000000000000000000000000')
       }
       init(){
-          console.log('初始化')
-          console.log(this.refs.map)
-          let mapContainer = this.refs.mapContainer;
-           map = new window.AMap.Map(mapContainer,{
-            resizeEnable: true, //是否监控地图容器尺寸变化
-            zoom:11, //初始化地图层级
-            center: [116.397428, 39.90923], //初始化地图中心点
-            mapStyle: "amap://styles/grey"
+        console.log('初始化')
+        console.log(this.refs.map)
+        let mapContainer = this.refs.mapContainer;
+        window.map = map = new window.AMap.Map(mapContainer,{
+          resizeEnable: true, //是否监控地图容器尺寸变化
+          zoom:11, //初始化地图层级
+          center: [116.397428, 39.90923], //初始化地图中心点
+          mapStyle: "amap://styles/grey"
+      })
+
+        window.carmarker = carmarker = new window.AMap.Marker({
+            icon:caricon,
+            position: [0,0],
+            offset: new window.AMap.Pixel(-10,-10), 
         })
-      }
+        window.map.add(window.carmarker)
 
 
+
+    }
       addStations = (stations) => {
-          console.log(stations)
+          //console.log(stations)
         if(stations != null){
            stations.forEach((item)=>{
                 var marker = new window.AMap.Marker({
@@ -45,7 +55,7 @@ export default class Map extends Component{
       }
 
       addGPS = (gps) => {
-            console.log(gps)
+            //console.log(gps)
             if(gps != null){
                 map.setCenter(getMapcenter(gps))
                 map.setZoom(15)
@@ -63,32 +73,39 @@ export default class Map extends Component{
                     strokeStyle: "solid",
                     fillColor: 'transparent',
                 })
-                var carmarker = new window.AMap.Marker({
-                    icon:caricon,
-                    position: getMapcenter(gps),
-                    offset: new window.AMap.Pixel(-10,-10), 
-                })
-                map.add(carmarker)
-                carmarker.setAngle(90)
+                // var carmarker = new window.AMap.Marker({
+                //     icon:caricon,
+                //     position: getMapcenter(gps),
+                //     offset: new window.AMap.Pixel(-10,-10), 
+                // })
+                //map.add(carmarker)
+                //carmarker.setAngle(90)
                 //map.add(gpsPolygon)
 
             }
       }
       setMapenter = (cargps) => {
+          console.log()
           map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
-          var marker = new window.AMap.Marker({
-            icon:caricon,
-            position: cargps,
-            offset: new window.AMap.Pixel(-10,-10), 
-        })
-        map.add(marker)
+        //   var carmarker = new window.AMap.Marker({
+        //     icon:caricon,
+        //     position:cargps,
+        //     offset: new window.AMap.Pixel(-10,-10), 
+        // })
+        //carmarker.setPosition(cargps)
+        //map.add(carmarker)
       }
 
     render(){
         const {stoptask,GPS,Stations,cargps} = this.props;
-        {Stations?this.addStations(Stations):this.addStations(null)}
-        {GPS&&this.addGPS(GPS)}
-        {cargps&&this.setMapenter(cargps)}
+        // {Stations?this.addStations(Stations):this.addStations(null)}
+        // {GPS&&this.addGPS(GPS)}
+        // {cargps&&this.setMapenter(cargps)}
+        const mapCon = (
+            <div ref='mapContainer' id='map' className='map-itself'>
+
+            </div>
+        )
         return(
             <div className='map'>
                 <div className='map-stopbtn btn' onClick={stoptask}>
@@ -96,7 +113,7 @@ export default class Map extends Component{
                 </div>
                 
                 <div className='map-container'>
-                    <div ref='mapContainer' id='map' className='map-itself'></div>
+                    {mapCon}
                 </div>
             </div>
            
