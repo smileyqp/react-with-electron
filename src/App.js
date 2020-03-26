@@ -14,8 +14,7 @@ import ImmediatebeginModal from './components/ImmediatebeginModal'
 import ShutdownModal from './components/ShutdownModal'
 import StationPanel from './components/StationPanel'
 import Queue from './utils/Queue';
-import {getNextcurStationkey} from './utils/utils'
-import stationpic from './images/station_pic.png';
+import {getNextcurStationkey,setstationMarkers,setPathpolyline,setMapcenter,setCarposition,removeMapcomponent,setMapzoom} from './utils/utils'
 import {getMapcenter} from './utils/utils'
 
 
@@ -26,7 +25,7 @@ const stationQUeue = new Queue();
 var timer = null;
 var lastdate = null;
 var curdate = null;
-var cargps,battery,speed,mile =  null;
+
 require('./styles/index.css')
 class App extends React.Component{
   constructor(props){
@@ -49,24 +48,12 @@ class App extends React.Component{
         console.log(res)
         this.setState({GPS:res.GPS,Stations:res.Stations})
         if(res.GPS != null){
-          window.map.setCenter(getMapcenter(res.GPS))
+          setMapcenter(getMapcenter(res.GPS))
         }
         if(res.Stations != null){
-          window.map.setZoom(15)
+          setMapzoom(15)
           console.log(window.map)
-          res.Stations.forEach((item)=>{
-            var marker = new window.AMap.Marker({
-                icon:stationpic,
-                position: [item.GPS.Longitude,item.GPS.Latitude],
-                offset: new window.AMap.Pixel(-10,-10), 
-            })
-            marker.setLabel({
-                offset: new window.AMap.Pixel(0, 0),  //设置文本标注偏移量
-                content: `<div>${item.Name}</div>`, //设置文本标注内容
-                direction: 'bottom' //设置文本标注方位
-            });
-           window.map.add(marker)
-       })
+          setstationMarkers(res.Stations)
         }
       }});
     const _this = this;
@@ -77,26 +64,29 @@ class App extends React.Component{
             // console.log('0000000'+msg)
             var cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y);
             // console.log(Convert(msg.pose.pose.position.x,msg.pose.pose.position.y))
-            window.map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
-            window.carmarker.setPosition(Convert(msg.pose.pose.position.x,msg.pose.pose.position.y))
+            setMapcenter(cargps)
+            setCarposition(Convert(msg.pose.pose.position.x,msg.pose.pose.position.y))
           })
         break;
         case subscribMsg[1].name:
           item.subscribe(function(msg){
             //console.log('1111111111111'+msg.data[0])
-            battery = msg.data[0];
             _this.setState({battery: msg.data[0]})//ok battery
           })
           break;
         case subscribMsg[2].name:
           item.subscribe(function(msg){
-            //console.log('222222'+msg)
+            console.log('222222---'+msg.poses.length)
+            var planpath= msg.poses.map((item)=>{
+              return Convert(item.pose.position.x,item.pose.position.y)
+            })
+            setPathpolyline(planpath);
             //_this.setState({msg:msg})
           })
           break;
         case subscribMsg[3].name:
           item.subscribe(function(msg){
-            console.log('task end333333333333:'+msg)  //任务结束通知
+            //console.log('task end333333333333:'+msg)  //任务结束通知
 
             if(_this.state.curStationkey !=  null){
               if(lastdate == null){
@@ -104,6 +94,7 @@ class App extends React.Component{
                 _this.getShowstations(nextStation)
                 _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
                 _this.debounce();
+                removeMapcomponent(window.pathpolyline)
                 lastdate = new Date().getTime();
               }else{
                 curdate = new Date().getTime();
@@ -112,6 +103,7 @@ class App extends React.Component{
                   _this.getShowstations(nextStation)
                   _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
                   _this.debounce();
+                  removeMapcomponent(window.pathpolyline)
                 }
                 lastdate = curdate;
               }
@@ -123,14 +115,12 @@ class App extends React.Component{
           case subscribMsg[4].name:
             item.subscribe(function(msg){
               //console.log('44444444444444   m/s  '+ msg.data[1]*3.6)
-              speed = (msg.data[1]*3.6).toFixed(1);
               _this.setState({speed:(msg.data[1]*3.6).toFixed(1)})
               //_this.setState({speed:msg.twist.twist.linear.x.toFixed(2)})//ok speed
             })
             break;
           case subscribMsg[5].name:
             item.subscribe(function(msg){
-              mile = msg.data[0].toFixed(1);
               _this.setState({mile:msg.data[0].toFixed(1)})
               //console.log('5555mile：'+msg.data[0])
               //_this.setState({mile:msg})
@@ -321,9 +311,6 @@ class App extends React.Component{
           />
           <Map
             stoptask={this.stoptask}
-            GPS={this.state.GPS&&this.state.GPS}
-            Stations={this.state.Stations}
-            cargps={cargps&&cargps}
           />
    
 
