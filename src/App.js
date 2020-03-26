@@ -107,10 +107,6 @@ class App extends React.Component{
                 lastdate = new Date().getTime();
               }else{
                 curdate = new Date().getTime();
-                console.log(curdate)
-                  console.log(lastdate)
-                  console.log(typeof lastdate)
-                  console.log(parseInt(curdate - lastdate)/1000)
                 if(parseInt(curdate - lastdate)/1000 > 5){
                   var nextStation = getNextcurStationkey(_this.state.curStationkey,_this.state.Stations);
                   _this.getShowstations(nextStation)

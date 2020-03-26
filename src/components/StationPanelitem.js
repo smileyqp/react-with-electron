@@ -14,7 +14,7 @@ export default class StationPanelitem extends Component{
             :
             <div className={classnames({'station-sm-circle':isSm},{'station-sm-circle-dark':isDark},{'station-sm-circle-light':!isDark},{'station-bg-circle':isBg})}>
                 {isBg&&<div className='station-bg-title'>起始站</div>}
-                <div className='station-font-container'>
+                <div className={classnames('station-font-container',{'station-font-container-default':!isBg},{'station-font-container-bg':isBg})}>
                     <div className={classnames('station-font-item',{'station-bg-color':isBg})}>{stationName}</div>
                 </div>
             </div>

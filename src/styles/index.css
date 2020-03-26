@@ -121,10 +121,15 @@
 }
 
 .station-font-container{
-    width:50px;
     height:30px;
     position: relative;
     overflow: hidden;
+}
+.station-font-container-default{
+    width: 70px;
+}
+.station-font-container-bg{
+    width:110px;
 }
 .station-font-item{
     position: absolute;
