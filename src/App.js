@@ -14,7 +14,7 @@ import ImmediatebeginModal from './components/ImmediatebeginModal'
 import ShutdownModal from './components/ShutdownModal'
 import StationPanel from './components/StationPanel'
 import Queue from './utils/Queue';
-import {getNextcurStationkey,setstationMarkers,setPathpolyline,setMapcenter,setCarposition,removeMapcomponent,setMapzoom} from './utils/utils'
+import {getNextcurStationkey,setstationMarkers,setPathpolyline,setMapcenter,setCarposition,removeMapcomponent,setMapzoom,setSpecialicon} from './utils/utils'
 import {getMapcenter} from './utils/utils'
 
 
@@ -81,7 +81,6 @@ class App extends React.Component{
               return Convert(item.pose.position.x,item.pose.position.y)
             })
             setPathpolyline(planpath);
-            //_this.setState({msg:msg})
           })
           break;
         case subscribMsg[3].name:
@@ -116,14 +115,12 @@ class App extends React.Component{
             item.subscribe(function(msg){
               //console.log('44444444444444   m/s  '+ msg.data[1]*3.6)
               _this.setState({speed:(msg.data[1]*3.6).toFixed(1)})
-              //_this.setState({speed:msg.twist.twist.linear.x.toFixed(2)})//ok speed
             })
             break;
           case subscribMsg[5].name:
             item.subscribe(function(msg){
               _this.setState({mile:msg.data[0].toFixed(1)})
               //console.log('5555mile：'+msg.data[0])
-              //_this.setState({mile:msg})
             })
         break;
         default:
@@ -159,6 +156,8 @@ class App extends React.Component{
     var keyIndex = this.state.Stations[curkey].Index;
     var arr = [];
     stationQUeue.init(this.state.Stations)
+    setSpecialicon(curkey,stationQUeue.frontele(curkey))
+
     this.state.Stations.forEach((item,key)=>{
       if(item.Index == keyIndex){
         if(key != 0){

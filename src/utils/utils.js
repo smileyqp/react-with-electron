@@ -5,6 +5,8 @@
 // }
 // const {ipcRenderer} = require('electron')
 import stationpic from '../images/station_pic.png';
+import curstationpic from '../images/cur_station.png';
+import frontstationpic from '../images/front_station.png'
 export const getMapcenter = (gps) => {
    try{
     if(Array.isArray(gps)){
@@ -40,18 +42,27 @@ export const getNextcurStationkey = (key,arr) => {
 export const setstationMarkers = (arr) => {
   try{
     if(Array.isArray(arr)){
-      arr.forEach((item)=>{
-        var marker = new window.AMap.Marker({
+      window.stationsmarkers = arr.map((item,key)=>{
+       // console.log(item)
+        // var iconpic;
+        // if( key != curkey && key != curkey -1){
+        //   iconpic = stationpic;
+        // }else{
+        //   iconpic = key == curkey ? curstationpic : frontstationpic;
+        // }
+        window.stationsmarker = new window.AMap.Marker({
             icon:stationpic,
             position: [item.GPS.Longitude,item.GPS.Latitude],
             offset: new window.AMap.Pixel(-10,-10), 
         })
-        marker.setLabel({
+        window.stationsmarker.setLabel({
             offset: new window.AMap.Pixel(0, 0),  //设置文本标注偏移量
             content: `<div>${item.Name}</div>`, //设置文本标注内容
             direction: 'bottom' //设置文本标注方位
         });
-        window.map.add(marker)
+        window.stationsmarker.setExtData({Index:key})
+        window.map.add(window.stationsmarker)
+        return window.stationsmarker;
      })
     }
   }catch(err){
@@ -103,3 +114,20 @@ export const setMapzoom = (num) => {
   }
 }
 
+
+
+export const setSpecialicon = (curIndex,frontIndex) => {
+  console.log(window.stationsmarkers)
+  window.stationsmarkers.forEach((item)=>{
+    if(item.getExtData().Index != curIndex && item.getExtData().Index != frontIndex){
+      item.setIcon(stationpic)
+    }
+    if(curIndex == item.getExtData().Index){
+      item.setIcon(curstationpic)
+    }
+    if(frontIndex == item.getExtData().Index){
+      item.setIcon(frontstationpic)
+    }
+    
+  })
+}
