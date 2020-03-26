@@ -192,9 +192,13 @@
     right:50px;
     font-size:30px;
 }
+.map-con{
+    height: 450px;
+    overflow: hidden;
+}
 .map-container{
     width:932px;
-    height:440px;
+    height:460px;
     margin-top: 15px;
 }
 .map-itself{

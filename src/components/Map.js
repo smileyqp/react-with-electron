@@ -33,9 +33,12 @@ export default class Map extends Component{
                 <div className='map-stopbtn btn' onClick={stoptask}>
                     <div className='map-stopbtn-font btn'>终止行程</div>
                 </div>
-                <div className='map-container'>
-                    <div ref='mapContainer' id='map' className='map-itself'></div>
+                <div className='map-con'>
+                    <div className='map-container'>
+                        <div ref='mapContainer' id='map' className='map-itself'></div>
+                    </div>
                 </div>
+               
             </div>
            
         )
