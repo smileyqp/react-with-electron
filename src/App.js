@@ -39,7 +39,8 @@ class App extends React.Component{
       shutdownVisible:false,
       curStationkey:null,
       Stations:null,
-      timewait:10
+      timewait:10,
+      stoptaskVisible:false
     }
   }
   componentDidMount(){
@@ -74,10 +75,10 @@ class App extends React.Component{
         case subscribMsg[0].name:
           item.subscribe(function(msg){
             // console.log('0000000'+msg)
+            var cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y);
             // console.log(Convert(msg.pose.pose.position.x,msg.pose.pose.position.y))
-            cargps = Convert(msg.pose.pose.position.x,msg.pose.pose.position.y)//ok mapcenter
-            //window.map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
-            window.carmarker.setPosition(cargps)
+            window.map.setCenter(new window.AMap.LngLat(cargps[0],cargps[1]))
+            window.carmarker.setPosition(Convert(msg.pose.pose.position.x,msg.pose.pose.position.y))
           })
         break;
         case subscribMsg[1].name:
@@ -212,11 +213,10 @@ class App extends React.Component{
 
 
   stoptask = () => {
-    if(timer !== null){clearInterval(timer)}
-    if(this.state.immediatebeginVisible){
-      this.setState({immediatebeginVisible:false,timewait:null})
-    }
-    this.setState({beginVisible:true,curStationkey:null})
+
+    this.setState({stoptaskVisible:true})
+
+   
   }
   immediatebeginClick = () => {
     clearInterval(timer)
@@ -239,6 +239,18 @@ class App extends React.Component{
 
   clickItem = (carid) => {
     this.setState({choosedItem:carid})
+  }
+
+  stoptaskCancel = () => {
+    this.setState({stoptaskVisible:false})
+  }
+
+  stoptaskConfirm = () => {
+    if(timer !== null){clearInterval(timer)}
+    if(this.state.immediatebeginVisible){
+      this.setState({immediatebeginVisible:false,timewait:null})
+    }
+    this.setState({beginVisible:true,curStationkey:null,stoptaskVisible:false})
   }
   
   render(){
@@ -275,6 +287,19 @@ class App extends React.Component{
           shutdownVisible={this.state.shutdownVisible}
           shutdownCancel={this.shutdownCancel}
           shutdownConfirm={this.shutdownConfirm}
+          textfont={'是否退出程序？'}
+          redwarn = {true}
+        />
+      );
+
+
+      const stoptaskModal = (
+        <ShutdownModal
+          shutdownVisible={this.state.stoptaskVisible}
+          shutdownCancel={this.stoptaskCancel}
+          shutdownConfirm={this.stoptaskConfirm}
+          textfont={'是否终止行程？'}
+          redwarn={false}
         />
       );
 
@@ -285,7 +310,7 @@ class App extends React.Component{
           {carlistModal}
           {immediatebeginModal}
           {shutdownModal}
-
+          {stoptaskModal}
 
         <div className="app-container">
           <Header

@@ -101,15 +101,17 @@
 }
 
 .carlist-panel-bottom{
-    height: 115px;
+    height: 130px;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding-top: 8px;
 }
 .carlist-bottom-btn{
     width: 140px;
-    height: 50px;
+    height: 60px;
     background-image: url('../images/catlist_btn.png');
+    background-repeat: no-repeat;
     font-size:18px;
     font-family:'PingFang SC';
     font-weight:bold;
@@ -121,9 +123,7 @@
 
 .immediate-container{
     width: 410px;
-    height:370px;
-    position: absolute;
-    bottom: 74px;
+    height:390px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -137,7 +137,6 @@
     color:rgba(36,255,255,1);
     line-height: 250px;
     text-align: center;
-    
 }
 
 .immediate-time-circle{
@@ -157,11 +156,14 @@
 .immediate-btn-con{
     display: flex;
     flex-direction: row;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
 }
 .immediate-btn{
     width: 200px;
     height: 80px;
-    
     background-size: 200px 80px;
     font-size:30px;
     font-family:'PingFang SC';
@@ -204,12 +206,16 @@
     flex-direction: column;
 }
 .shutdown-warn{
-    height: 120px;
+    height: 100px;
     font-size:24px;
     font-family:'PingFang SC';
     font-weight:bold;
     color:rgba(36,255,255,1);
     line-height: 150px;
+}
+.shutdown-warn-red{
+    color:red;
+    font-family:'PingFang SC';
 }
 .shutdown-btn-con{
     height: 50%;
