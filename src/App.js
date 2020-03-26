@@ -70,8 +70,6 @@ class App extends React.Component{
       }});
     const _this = this;
     subscribeMsg(createRos(),subscribMsg).forEach((item)=>{
-      console.log(item)
-      console.log(item.name)
       switch(item.name){
         case subscribMsg[0].name:
           item.subscribe(function(msg){
@@ -98,28 +96,31 @@ class App extends React.Component{
         case subscribMsg[3].name:
           item.subscribe(function(msg){
             console.log('task end333333333333:'+msg)  //任务结束通知
-            if(lastdate == null&&_this.state.curStationkey !=  null && _this.state.Stations != null){
-              var nextStation = getNextcurStationkey(_this.state.curStationkey,_this.state.Stations);
-              _this.getShowstations(nextStation)
-              _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
-              _this.debounce();
-              lastdate = new Date().getTime();
-            }else{
-              curdate = new Date().getTime();
-              console.log(curdate)
-                console.log(lastdate)
-                console.log(typeof lastdate)
-                console.log(parseInt(curdate - lastdate)/1000)
-              if(parseInt(curdate - lastdate)/1000 > 5){
+
+            if(_this.state.curStationkey !=  null){
+              if(lastdate == null){
                 var nextStation = getNextcurStationkey(_this.state.curStationkey,_this.state.Stations);
                 _this.getShowstations(nextStation)
                 _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
                 _this.debounce();
+                lastdate = new Date().getTime();
+              }else{
+                curdate = new Date().getTime();
+                console.log(curdate)
+                  console.log(lastdate)
+                  console.log(typeof lastdate)
+                  console.log(parseInt(curdate - lastdate)/1000)
+                if(parseInt(curdate - lastdate)/1000 > 5){
+                  var nextStation = getNextcurStationkey(_this.state.curStationkey,_this.state.Stations);
+                  _this.getShowstations(nextStation)
+                  _this.setState({immediatebeginVisible:true,curStationkey:nextStation})
+                  _this.debounce();
+                }
+                lastdate = curdate;
               }
-              lastdate = curdate;
             }
 
-            _this.setState({msg:msg})
+
           })
           break;
           case subscribMsg[4].name:

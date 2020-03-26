@@ -13,7 +13,7 @@ app.on('ready',()=>{
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
-        //frame:false,
+        frame:false,
         webPreferences:{
             nodeIntegration:true,           
             webSecurity: false
